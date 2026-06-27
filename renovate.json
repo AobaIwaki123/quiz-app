@@ -1,0 +1,32 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "timezone": "Asia/Tokyo",
+  "schedule": ["before 10am on monday"],
+  "labels": ["dependencies"],
+  "packageRules": [
+    {
+      "description": "patch/minor の Go モジュール更新は自動マージ",
+      "matchDatasources": ["go"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "automerge": true,
+      "automergeType": "pr",
+      "platformAutomerge": true
+    },
+    {
+      "description": "Go 本体のバージョンアップは PR を作成（確認してからマージ）",
+      "matchManagers": ["gomod"],
+      "matchDepNames": ["go"],
+      "automerge": false,
+      "commitMessagePrefix": "deps(go)"
+    },
+    {
+      "description": "GitHub Actions の patch/minor は自動マージ",
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "automerge": true,
+      "automergeType": "pr",
+      "platformAutomerge": true
+    }
+  ]
+}
